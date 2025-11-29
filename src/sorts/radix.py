@@ -1,12 +1,49 @@
-# from src.sorts.counting import count_sort
-# def radix_sort(a: list[int], base: int = 10) -> list[int]:
-#     mx = max(a)
+def radix_sort(a: list[int], base: int = 10) -> list[int]:
+    """
+    Цифровая сортировка, степень до 10 включительно
+    """
+    
+    minEl = min(a)
+    if minEl < 0:
+        print("- Нельзя использовать сортировку Radix с отрицательными числами, т.к. она использует сортировку подсчётом")
+        return []
+    if not all(isinstance(x, int) for x in a):
+        print(" - Нельзя использовать сортировку Radix с типом float, т.к. она использует сортировку подсчётом")
+        return []
+    
+    mx = max(a)
+    result = a.copy()
 
-#     current_nums = a.copy()
-#     digits = [0] * len(a)
-#     for i in range(len(str(mx))):
-#         for j, num in enumerate(current_nums):
-#             digit = num % base
-#             digits[j] = digit
-#             current_nums[j] //= base
-#         digits = count_sort(digits)
+    exp = 1
+    while mx / exp >= 1:
+        result = count_sort_radix(result, exp, base)
+        exp *= base
+        
+    return result
+        
+def count_sort_radix(a: list[int], exp: int, base: int) -> list[int]:
+    """
+    Сортировка подсчётом для Radix Sort
+    """
+    n = len(a)
+
+    # Frequency count
+    counter = [0] * base    # Кол-во цифр
+    for el in a:
+        index = (el // exp) % base
+        counter[index] += 1
+    
+    for i in range(1, base):
+        counter[i] += counter[i - 1]
+        
+    result = [0] * n
+
+    i = n - 1
+    while i >= 0:
+        index = (a[i] // exp) % base
+        result[counter[index] - 1] = a[i]
+        counter[index] -= 1
+        i -= 1
+        
+    return result
+
