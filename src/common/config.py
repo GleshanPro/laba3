@@ -1,0 +1,32 @@
+# ruff: noqa
+import logging.config
+
+
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "[%(asctime)s] %(levelname)s: %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        }
+    },
+    "handlers": {
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "standard",
+            "mode": "a",
+            "filename": "program.log",
+            "maxBytes": 5 * 1024 * 1024,  # 5 MB before rotating
+            "backupCount": 5,
+            "level": "DEBUG",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True,
+        }
+    },
+}

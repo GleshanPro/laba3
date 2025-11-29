@@ -3,20 +3,20 @@ def count_sort(a: list[int]) -> list[int]:
     Сортировка подсчётом
     Эффективна для массивов с повторением чисел, желательно длина массива сопоставима максимальному числу в нём
     """
-    str_exists = [1 for x in a if type(x) == str]
+    str_exists = [1 for x in a if x is str]
     if str_exists:
         print("Count sort не сортирует строки.")
-        return
-    
+        return a
+
     if not all(isinstance(x, int) for x in a):
         print(" - Нельзя использовать сортировку подсчётом с типом float")
-        return []
-        
+        return a
+
     minEl = min(a)
     if minEl < 0:
         print("- Нельзя использовать сортировку подсчётом с отрицательными числами")
-        return []
-    
+        return a
+
     n = len(a)
     maxEl = max(a)
 

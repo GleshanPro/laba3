@@ -35,9 +35,9 @@
 
 ##### Windows:
 
-`.venv\Scripts\Activate`
+`source .venv\Scripts\Activate`
 
-5. Запуск
-   `python -m src.main [команда] [аргументы/параметры]`
+5. Запуск CLI
+   `python -m src.main`
 6. Запуск тестов
-   `uv run pytest` - N% покрытия
+   `uv run pytest`
