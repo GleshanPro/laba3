@@ -2,6 +2,11 @@ def bucket_sort(a: list[float], buckets: int | None = None) -> list[float]:
     """
     Карманная сортировка для вещественных чисел
     """
+    str_exists = [1 for x in a if type(x) == str]
+    if str_exists:
+        print("Bucket sort не сортирует строки.")
+        return
+    
     buckets_count = buckets if buckets is not None else len(a)
     buckets_array: list[list[float]] = [[] for _ in range(buckets_count)]
 

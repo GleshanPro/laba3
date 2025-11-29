@@ -67,6 +67,9 @@ class Heap:
     # O(n log n)
     @staticmethod
     def heap_sort(a: list[int]):
+        """
+        Сортировка кучей
+        """
         n = len(a)
         if n <= 1:
             return a

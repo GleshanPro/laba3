@@ -2,6 +2,10 @@ def radix_sort(a: list[int], base: int = 10) -> list[int]:
     """
     Цифровая сортировка, степень до 10 включительно
     """
+    str_exists = [1 for x in a if type(x) == str]
+    if str_exists:
+        print("- Radix Sort не сортирует строки.")
+        return
     
     minEl = min(a)
     if minEl < 0:
