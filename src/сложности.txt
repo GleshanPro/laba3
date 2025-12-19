@@ -1,0 +1,5 @@
+Bubble - O(n^2)
+Bucket - O(n)
+Insert - O(n * k) - каждый элемент на расстоянии <= k от нужной позиции
+Count - O(m + n), m - количество возможных значений, n - длина массива
+Radix - O(d * (n + b)), where d is the number of digits, n is the number of elements, and b is the base of the number system being used.
