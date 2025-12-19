@@ -121,12 +121,9 @@ class TestBucketSort:
         assert bucket_sort(arr, 10) == arr
 
     def test_string_input(self):
-        """Тест с строковым вводом"""
-        # Проверяем, что функция обработала строки (возвращает None или сообщение)
-        # assert result is None or "не сортирует строки" in str(result)
+        """Тест со строковым вводом"""
         with pytest.raises(TypeError):
             bucket_sort(["a", "b", "c"], 5)
-            pass
 
     def test_edge_case_buckets(self):
         """Тест граничных случаев с карманами"""
@@ -154,21 +151,19 @@ class TestCountSort:
 
     def test_negative_numbers(self):
         """Тест с отрицательными числами"""
-        result = count_sort([3, -1, 2])
-        # Проверяем, что функция обработала отрицательные числа
-        assert result == [] or "отрицательными числами" in str(result)
+        with pytest.raises(ValueError):
+            count_sort([3, -1, 2])
+            
 
     def test_float_numbers_count_sort(self):
         """Тест с вещественными числами"""
-        result = count_sort([3.5, 1.2, 2.7])
-        # Проверяем, что функция обработала float
-        assert result == [] or "типом float" in str(result)
+        with pytest.raises(TypeError):
+            count_sort([3.5, 1.2, 2.7])
 
     def test_string_input_count_sort(self):
         """Тест с строковым вводом"""
-        result = count_sort(["a", "b", "c"])
-        # Проверяем, что функция обработала строки
-        assert result is None or "не сортирует строки" in str(result)
+        with pytest.raises(TypeError):
+            count_sort(["a", "b", "c"])
 
 
 class TestHeapMin:
@@ -291,21 +286,18 @@ class TestRadixSort:
 
     def test_negative_numbers_radix(self):
         """Тест с отрицательными числами"""
-        result = radix_sort([3, -1, 2])
-        # Проверяем, что функция обработала отрицательные числа
-        assert result == [] or "отрицательными числами" in str(result)
+        with pytest.raises(ValueError):
+            radix_sort([3, -1, 2])
 
     def test_float_numbers_radix(self):
         """Тест с вещественными числами"""
-        result = radix_sort([3.5, 1.2, 2.7])
-        # Проверяем, что функция обработала float
-        assert result == [] or "типом float" in str(result)
+        with pytest.raises(TypeError):
+            radix_sort([3.5, 1.2, 2.7])
 
     def test_string_input_radix(self):
         """Тест с строковым вводом"""
-        result = radix_sort(["a", "b", "c"])
-        # Проверяем, что функция обработала строки
-        assert result is None or "не сортирует строки" in str(result)
+        with pytest.raises(TypeError):
+            radix_sort(["a", "b", "c"])
 
 
 class TestPerformance:
