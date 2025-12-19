@@ -77,33 +77,36 @@ def main() -> None:
                     user_input = input("Выберите сортировку: \n1) Bubble\n2) Bucket\n3) Count\n4) Heap\n5) Quick\n6) Radix\n7) Обновить массив\n")
 
                     new_array = []
-                    match(user_input):
-                        case "1":
-                            new_array = bubble_sort(list(array.copy()))
-                        case "2":
-                            new_array = bucket_sort(list(array.copy()))
-                        case "3":
-                            new_array = count_sort(list(array.copy()))
-                        case "4":
-                            new_array = HeapMax.heap_sort(list(array.copy()))
-                        case "5":
-                            new_array = quick_sort(list(array.copy()))
-                        case "6":
-                            flag = False
-                            base = 10
-                            while not flag:
-                                base = num_input("Основание системы счисления (>= 2): ")
-                                if base < 2:
-                                    print("Основание системы счисления >= 2.")
-                                else:
-                                    flag = True
-                            new_array = radix_sort(list(array.copy()), base)
-                        case "7":
-                            array = array_input()
-                            prev_array = []
-                            continue
-                        case "q":
-                            break
+                    try:
+                        match(user_input):
+                            case "1":
+                                new_array = bubble_sort(list(array.copy()))
+                            case "2":
+                                new_array = bucket_sort(list(array.copy()))
+                            case "3":
+                                new_array = count_sort(list(array.copy()))
+                            case "4":
+                                new_array = HeapMax.heap_sort(list(array.copy()))
+                            case "5":
+                                new_array = quick_sort(list(array.copy()))
+                            case "6":
+                                flag = False
+                                base = 10
+                                while not flag:
+                                    base = num_input("Основание системы счисления (>= 2): ")
+                                    if base < 2:
+                                        print("Основание системы счисления >= 2.")
+                                    else:
+                                        flag = True
+                                new_array = radix_sort(list(array.copy()), base)
+                            case "7":
+                                array = array_input()
+                                prev_array = []
+                                continue
+                            case "q":
+                                break
+                    except(Exception):
+                        continue
 
                     if new_array:
                         print("Ваш сортированный массив: ", *new_array)
