@@ -7,7 +7,7 @@ from src.fibonacci import fibo_resursive
 from src.sorts.bubble import bubble_sort
 from src.sorts.bucket import bucket_sort
 from src.sorts.count import count_sort
-from src.sorts.heap import Heap
+from src.sorts.heap_max import HeapMax
 from src.sorts.quick import quick_sort
 from src.sorts.radix import radix_sort
 
@@ -85,7 +85,7 @@ def main() -> None:
                         case "3":
                             new_array = count_sort(list(array.copy()))
                         case "4":
-                            new_array = Heap.heap_sort(list(array.copy()))
+                            new_array = HeapMax.heap_sort(list(array.copy()))
                         case "5":
                             new_array = quick_sort(list(array.copy()))
                         case "6":

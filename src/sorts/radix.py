@@ -2,18 +2,18 @@ def radix_sort(a: list[int], base: int = 10) -> list[int]:
     """
     Цифровая сортировка, степень от 2 до 10 включительно
     """
-    str_exists = [1 for x in a if x is str]
+    str_exists = [1 for x in a if isinstance(x, str)]
     if str_exists:
         print("- Radix Sort не сортирует строки.")
-        return a
+        raise TypeError
 
     minEl = min(a)
     if minEl < 0:
         print("- Нельзя использовать сортировку Radix с отрицательными числами, т.к. она использует сортировку подсчётом")
-        return a
+        raise ValueError
     if not all(isinstance(x, int) for x in a):
         print(" - Нельзя использовать сортировку Radix с типом float, т.к. она использует сортировку подсчётом")
-        return a
+        raise TypeError
 
     mx = max(a)
     result = a.copy()

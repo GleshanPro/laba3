@@ -96,16 +96,16 @@ class TestStack:
         stack = Stack(5)
         assert stack.is_empty()
         stack.push(1)
-        assert stack.is_empty()
+        assert not stack.is_empty()
         stack.pop()
         assert stack.is_empty()
 
     def test_is_full(self):
         """Тест проверки заполненности стэка"""
         stack = Stack(2)
-        assert stack.is_full()
+        assert not stack.is_full()
         stack.push(1)
-        assert stack.is_full()
+        assert not stack.is_full()
         stack.push(2)
         assert stack.is_full()
 
@@ -184,16 +184,16 @@ class TestQueue:
         queue = Queue(5)
         assert queue.is_empty()
         queue.enqueue(1)
-        assert queue.is_empty()
+        assert not queue.is_empty()
         queue.dequeue()
         assert queue.is_empty()
 
     def test_is_full_queue(self):
         """Тест проверки заполненности очереди"""
         queue = Queue(2)
-        assert queue.is_full()
+        assert not queue.is_full()
         queue.enqueue(1)
-        assert queue.is_full()
+        assert not queue.is_full()
         queue.enqueue(2)
         assert queue.is_full()
 
