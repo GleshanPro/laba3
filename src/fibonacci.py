@@ -1,4 +1,5 @@
 from functools import lru_cache
+# O(n)
 def fibo(n: int) -> int:
     if n < 1:
         raise ValueError("Числа Фибоначчи начинают индексироваться с 1")

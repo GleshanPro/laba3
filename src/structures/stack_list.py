@@ -1,4 +1,5 @@
 from src.sorts.heap import Heap
+# в Python не нужно держать i_ptr - гарант знгаем работаем с концом
 class Stack:
     def __init__(self, max_size):
         if max_size <= 0:
@@ -6,6 +7,8 @@ class Stack:
         self.body = [0] * max_size
         self.i_ptr = -1
         self.max_size = max_size
+        # self.min_el = max int
+        # массив минимумов
 
     def pop(self) -> int:
         if self.is_empty():
