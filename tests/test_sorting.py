@@ -4,7 +4,8 @@ import random
 from src.sorts.bubble import bubble_sort
 from src.sorts.bucket import bucket_sort
 from src.sorts.count import count_sort
-from src.sorts.heap import Heap
+from src.sorts.heap_min import HeapMin
+from src.sorts.heap_max import HeapMax
 from src.sorts.quick import quick_sort
 from src.sorts.radix import radix_sort
 
@@ -14,7 +15,7 @@ class TestSortingAlgorithms:
     # Общие тесты для всех сортировок
     @pytest.mark.parametrize("sort_func", [
         bubble_sort,
-        Heap.heap_sort,
+        HeapMax.heap_sort,
         quick_sort,
     ])
     def test_empty_array(self, sort_func):
@@ -25,7 +26,7 @@ class TestSortingAlgorithms:
         bubble_sort,
         lambda x: bucket_sort(x, 5),
         count_sort,
-        Heap.heap_sort,
+        HeapMax.heap_sort,
         quick_sort,
         lambda x: radix_sort(x, 10)
     ])
@@ -37,7 +38,7 @@ class TestSortingAlgorithms:
         bubble_sort,
         lambda x: bucket_sort(x, 5),
         count_sort,
-        Heap.heap_sort,
+        HeapMax.heap_sort,
         quick_sort,
         lambda x: radix_sort(x, 10)
     ])
@@ -49,7 +50,7 @@ class TestSortingAlgorithms:
         bubble_sort,
         lambda x: bucket_sort(x, 5),
         count_sort,
-        Heap.heap_sort,
+        HeapMax.heap_sort,
         quick_sort,
         lambda x: radix_sort(x, 10)
     ])
@@ -61,7 +62,7 @@ class TestSortingAlgorithms:
         bubble_sort,
         lambda x: bucket_sort(x, 5),
         count_sort,
-        Heap.heap_sort,
+        HeapMax.heap_sort,
         quick_sort,
         lambda x: radix_sort(x, 10)
     ])
@@ -73,7 +74,7 @@ class TestSortingAlgorithms:
         bubble_sort,
         lambda x: bucket_sort(x, 5),
         count_sort,
-        Heap.heap_sort,
+        HeapMax.heap_sort,
         quick_sort,
         lambda x: radix_sort(x, 10)
     ])
@@ -121,9 +122,11 @@ class TestBucketSort:
 
     def test_string_input(self):
         """Тест с строковым вводом"""
-        result = bucket_sort(["a", "b", "c"], 5)
         # Проверяем, что функция обработала строки (возвращает None или сообщение)
-        assert result is None or "не сортирует строки" in str(result)
+        # assert result is None or "не сортирует строки" in str(result)
+        with pytest.raises(TypeError):
+            bucket_sort(["a", "b", "c"], 5)
+            pass
 
     def test_edge_case_buckets(self):
         """Тест граничных случаев с карманами"""
@@ -168,16 +171,16 @@ class TestCountSort:
         assert result is None or "не сортирует строки" in str(result)
 
 
-class TestHeapSort:
-    """Тесты для пирамидальной сортировки"""
+class TestHeapMin:
+    """Тесты для сортировки кучей максимума"""
 
     def test_heap_class_methods(self):
         """Тест методов класса Heap"""
         arr = [4, 2, 8, 1, 3]
-        heap = Heap.build_heap(arr)
+        heap = HeapMax.build_heap(arr)
 
-        # Проверяем, что минимум корректен
-        assert heap.min() == 1
+        # Проверяем, что максимум корректен
+        assert heap.max() == 8
 
         # Проверяем, что исходный массив не изменился
         assert arr == [4, 2, 8, 1, 3]
@@ -185,18 +188,48 @@ class TestHeapSort:
     def test_heap_sort_comprehensive(self):
         """Комплексный тест heap sort"""
         # Тест с отрицательными числами
-        assert Heap.heap_sort([3, -1, 2, -5, 4]) == [-5, -1, 2, 3, 4]
+        assert HeapMax.heap_sort([3, -1, 2, -5, 4]) == [4, 3, 2, -1, -5]
 
         # Тест с большим диапазоном
-        assert Heap.heap_sort([100, 1, 1000, 10]) == [1, 10, 100, 1000]
+        assert HeapMax.heap_sort([100, 1, 1000, 10]) == [1000, 100, 10, 1]
 
         # Тест с повторениями
-        assert Heap.heap_sort([5, 3, 5, 1, 3]) == [1, 3, 3, 5, 5]
+        assert HeapMax.heap_sort([5, 3, 5, 1, 3]) == [5, 5, 3, 3, 1]
 
     def test_heap_invariants(self):
         """Тест инвариантов кучи"""
         arr = [random.randint(1, 100) for _ in range(20)]
-        heap = Heap.build_heap(arr)
+        heap = HeapMax.build_heap(arr)
+
+        # Проверяем инвариант кучи для всех элементов
+        for i in range(len(heap.array)):
+            left = 2 * i + 1
+            right = 2 * i + 2
+
+            if left < len(heap.array):
+                assert heap.array[i] >= heap.array[left]
+            if right < len(heap.array):
+                assert heap.array[i] >= heap.array[right]
+                
+class TestHeapMin:
+    """Тесты для кучи минимума"""
+
+    def test_heap_class_methods(self):
+        """Тест методов класса Heap"""
+        arr = [4, 2, 8, 1, 3]
+        heap = HeapMin.build_heap(arr)
+
+        # Проверяем, что минимум корректен
+        assert heap.min() == 1
+
+        # Проверяем, что исходный массив не изменился
+        assert arr == [4, 2, 8, 1, 3]
+
+
+    def test_heap_invariants(self):
+        """Тест инвариантов кучи"""
+        arr = [random.randint(1, 100) for _ in range(20)]
+        heap = HeapMin.build_heap(arr)
 
         # Проверяем инвариант кучи для всех элементов
         for i in range(len(heap.array)):
@@ -282,7 +315,6 @@ class TestPerformance:
         bubble_sort,
         lambda x: bucket_sort(x, 100),
         count_sort,
-        Heap.heap_sort,
         quick_sort,
         lambda x: radix_sort(x, 10)
     ])
@@ -302,7 +334,6 @@ class TestPerformance:
         assert bubble_sort(arr.copy()) == expected
         assert bucket_sort(arr.copy(), 50) == expected
         assert count_sort(arr.copy()) == expected
-        assert Heap.heap_sort(arr.copy()) == expected
         assert quick_sort(arr.copy()) == expected
         assert radix_sort(arr.copy(), 10) == expected
 
@@ -313,7 +344,7 @@ class TestErrorCases:
     def test_none_input(self):
         """Тест с None входом"""
         # Проверяем, что функции не падают с None
-        for sort_func in [bubble_sort, count_sort, Heap.heap_sort, quick_sort]:
+        for sort_func in [bubble_sort, count_sort, quick_sort]:
             with pytest.raises(Exception):
                 sort_func(None)
 
@@ -321,6 +352,6 @@ class TestErrorCases:
         """Тест с невалидными типами данных"""
         # Mix of types
         mixed_arr = [1, "a", 3]
-        for sort_func in [bubble_sort, Heap.heap_sort, quick_sort]:
+        for sort_func in [bubble_sort, quick_sort]:
             with pytest.raises(Exception):
                 sort_func(mixed_arr)

@@ -1,4 +1,4 @@
-from src.sorts.heap import Heap
+from src.sorts.heap_min import HeapMin
 class Stack:
     def __init__(self, max_size):
         if max_size <= 0:
@@ -41,7 +41,7 @@ class Stack:
 
         # Брать только заполненную часть стэка
         stack_elements = self.body[:self.i_ptr + 1]
-        heap = Heap.build_heap(stack_elements)
+        heap = HeapMin.build_heap(stack_elements)
         return heap.min()
 
     def __len__(self) -> int:
